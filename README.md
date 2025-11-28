@@ -13,6 +13,8 @@ Este projeto foi desenvolvido para a ASPROMOVIMAR com o objetivo de facilitar a 
 - **Ações Sociais**: Gerenciamento de programas sociais (como Mesa Brasil)
 - **Inscrições**: Sistema de cadastro para participação em eventos
 - **Painel Administrativo**: Gestão completa de conteúdo e inscrições
+- **Editor Rico**: Criação de notícias com formatação avançada (negrito, listas, etc.)
+- **Página de Notícias Moderna**: Layout imersivo com leitura otimizada e compartilhamento social
 
 ## Tecnologias Utilizadas
 
@@ -21,6 +23,7 @@ Este projeto foi desenvolvido para a ASPROMOVIMAR com o objetivo de facilitar a 
 - **Express** - Framework web
 - **UUID** - Geração de IDs únicos
 - **Express Validator** - Validação de dados
+- **Sanitize HTML** - Sanitização de conteúdo rico (prevenção XSS)
 - **CORS** - Controle de acesso entre origens
 
 ### Frontend
@@ -28,6 +31,8 @@ Este projeto foi desenvolvido para a ASPROMOVIMAR com o objetivo de facilitar a 
 - **CSS3** - Estilização com CSS Variables e design responsivo
 - **JavaScript (ES6+)** - Vanilla JS sem frameworks
 - **Magic UI** - Animações e efeitos visuais
+- **Quill.js** - Editor de texto rico para notícias
+- **Font Awesome** - Ícones vetoriais
 
 ### Armazenamento (Fase Atual)
 - **JSON** - Armazenamento em arquivos JSON
@@ -134,7 +139,7 @@ Este padrão facilita a futura migração para banco de dados, pois apenas a cam
 {
   "id": "uuid",
   "titulo": "string",
-  "descricao": "string",
+  "descricao": "string (HTML rico suportado)",
   "data": "YYYY-MM-DD",
   "categoria": "string",
   "link": "string | null",
@@ -264,6 +269,7 @@ npm run dev
 #### Gestão de Notícias
 - Criar/editar/deletar notícias
 - Categorização
+- Editor de texto rico (Quill.js) para formatação
 - Links externos opcionais
 - Controle de visibilidade
 
@@ -362,7 +368,8 @@ Use sempre em inglês: `success`, `message`, `data` (não `sucesso`, `mensagem`)
 - Autenticação Basic Auth para rotas administrativas
 - Validação de CPF único por evento
 - CORS configurado
-- Prevenção de XSS e SQL Injection (via validações)
+- Prevenção de XSS (via sanitize-html para conteúdo rico)
+- Prevenção de SQL Injection (via validações)
 
 ### Recomendações para Produção
 - [ ] Implementar HTTPS
