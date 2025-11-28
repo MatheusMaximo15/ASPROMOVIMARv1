@@ -61,7 +61,9 @@ async function carregarEventosHome() {
 
     if (response.ok) {
       const result = await response.json();
-      const eventos = result.data.slice(0, 3); // Mostrar apenas os 3 próximos eventos
+      // Filtrar apenas eventos marcados para aparecer em "Próximos Eventos"
+      const eventosFiltrados = result.data.filter(e => e.proximo_evento !== false);
+      const eventos = eventosFiltrados.slice(0, 3); // Mostrar apenas os 3 próximos eventos
 
       const container = document.getElementById('eventos-container');
 
@@ -127,7 +129,27 @@ async function carregarAcoesSociaisHome() {
 
     if (response.ok) {
       const result = await response.json();
-      const eventos = (result.data || []).filter(e => e.ativo && e.acao_social);
+
+      // Obter data local do usuário (sem timezone issues)
+      const hoje = new Date();
+      const hojeSemHora = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+      // Filtrar ações sociais ativas e que ainda não expiraram
+      const eventos = (result.data || []).filter(e => {
+        if (!e.ativo || !e.acao_social) return false;
+
+        // Se tem data de término, verificar se não passou
+        if (e.data_evento_fim) {
+          const [ano, mes, dia] = e.data_evento_fim.split('-').map(Number);
+          const dataFim = new Date(ano, mes - 1, dia, 23, 59, 59, 999);
+          return dataFim >= hojeSemHora;
+        }
+
+        // Se não tem data de término, verificar se a data do evento ainda não passou
+        const [ano, mes, dia] = e.data_evento.split('-').map(Number);
+        const dataEvento = new Date(ano, mes - 1, dia, 23, 59, 59, 999);
+        return dataEvento >= hojeSemHora;
+      });
 
       const container = document.getElementById('acoes-container');
 
@@ -159,10 +181,21 @@ async function carregarAcoesSociaisHome() {
       container.innerHTML = eventos.map((evento, index) => {
         const delay = (index + 1) * 100;
         const dataEvento = new Date(evento.data_evento);
-        const periodo = dataEvento.toLocaleDateString('pt-BR', {
-          month: 'long',
-          year: 'numeric'
-        });
+
+        let periodo;
+        if (evento.data_evento_fim) {
+          const dataFim = new Date(evento.data_evento_fim);
+          if (dataEvento.getTime() === dataFim.getTime()) {
+            // Mesmo dia
+            periodo = dataEvento.toLocaleDateString('pt-BR');
+          } else {
+            // Período com início e fim
+            periodo = `${dataEvento.toLocaleDateString('pt-BR')} até ${dataFim.toLocaleDateString('pt-BR')}`;
+          }
+        } else {
+          // Evento sem data de término (um único dia)
+          periodo = dataEvento.toLocaleDateString('pt-BR');
+        }
 
         const descricaoFormatada = (evento.descricao || '').replace(/\n/g, '<br>');
 

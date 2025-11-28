@@ -96,10 +96,21 @@ class ContentRepository {
 
   async getEventosProximos(limit = null) {
     const eventos = await this.getAllEventos();
-    const hoje = new Date();
+
+    // Obter data atual em UTC-3 (horário de Brasília)
+    const agora = new Date();
+    const offsetBrasilia = -3 * 60; // UTC-3 em minutos
+    const hoje = new Date(agora.getTime() + (agora.getTimezoneOffset() + offsetBrasilia) * 60000);
+    hoje.setHours(0, 0, 0, 0);
+
     const proximos = eventos.filter(e => {
-      const dataEvento = new Date(e.data_evento);
-      return dataEvento >= hoje && e.ativo;
+      if (!e.ativo) return false;
+
+      // Parse da data do evento (vem como string YYYY-MM-DD)
+      const [ano, mes, dia] = e.data_evento.split('-').map(Number);
+      const dataEvento = new Date(ano, mes - 1, dia);
+
+      return dataEvento >= hoje;
     });
     return limit ? proximos.slice(0, limit) : proximos;
   }
@@ -112,10 +123,12 @@ class ContentRepository {
       titulo: eventoData.titulo,
       descricao: eventoData.descricao,
       data_evento: eventoData.data_evento,
+      data_evento_fim: eventoData.data_evento_fim || null,
       horario: eventoData.horario || '',
       local: eventoData.local || 'A definir',
       link: eventoData.link || null,
       ativo: eventoData.ativo !== false,
+      proximo_evento: eventoData.proximo_evento !== false,
       acao_social: eventoData.acao_social === true,
       mostrar_botao_inscricao: eventoData.mostrar_botao_inscricao === true,
       data_criacao: new Date().toISOString()

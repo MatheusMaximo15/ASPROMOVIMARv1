@@ -10,7 +10,12 @@
   <header>
     <div class="container">
       <h1>ASPROMOVIMAR</h1>
-      <nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="mainNav">
         <a href="/">Início</a>
         <a href="/#sobre">Sobre</a>
         <a href="/#noticias">Notícias</a>
@@ -155,5 +160,31 @@
   </footer>
 
   <script src="/js/cadastro.js"></script>
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a link
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "1f2a531b-791d-46a1-a29f-7e9a4b7b86ba",
+    "titulo": "Futebol na praça",
+    "descricao": "sadfsadfsadfsadf",
+    "data": "2025-11-28T01:09:43.367Z",
+    "categoria": "Notícia",
+    "link": null,
+    "ativa": true,
+    "data_criacao": "2025-11-28T01:09:43.369Z"
+  }
+]

@@ -1,6 +1,95 @@
 let authToken = null;
 let todosBeneficiarios = [];
 
+// Toast Notification System
+function showToast(message, type = 'success', title = null) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+
+  const icons = {
+    success: '✓',
+    error: '✕',
+    info: 'i'
+  };
+
+  const titles = {
+    success: title || 'Sucesso!',
+    error: title || 'Erro',
+    info: title || 'Informação'
+  };
+
+  toast.innerHTML = `
+    <div class="toast-icon">${icons[type]}</div>
+    <div class="toast-content">
+      <div class="toast-title">${titles[type]}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+
+  container.appendChild(toast);
+
+  // Auto remove após 5 segundos
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, 5000);
+}
+
+// Confirmation Modal System
+function showConfirm(message, title = 'Confirmar ação', confirmText = 'Confirmar', cancelText = 'Cancelar') {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-modal-overlay';
+
+    overlay.innerHTML = `
+      <div class="confirm-modal">
+        <div class="confirm-modal-header">
+          <h3 class="confirm-modal-title">${title}</h3>
+        </div>
+        <div class="confirm-modal-body">
+          ${message}
+        </div>
+        <div class="confirm-modal-footer">
+          <button class="btn btn-small" id="confirm-cancel">${cancelText}</button>
+          <button class="btn btn-primary" id="confirm-ok">${confirmText}</button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const confirmBtn = overlay.querySelector('#confirm-ok');
+    const cancelBtn = overlay.querySelector('#confirm-cancel');
+
+    const removeModal = () => {
+      overlay.style.animation = 'fadeOut 0.2s ease-in';
+      setTimeout(() => overlay.remove(), 200);
+    };
+
+    confirmBtn.addEventListener('click', () => {
+      removeModal();
+      resolve(true);
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      removeModal();
+      resolve(false);
+    });
+
+    // Fechar ao clicar fora
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        removeModal();
+        resolve(false);
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const loginSection = document.getElementById('login-section');
   const adminSection = document.getElementById('admin-section');
@@ -548,18 +637,22 @@ Ação: ${beneficiario.acao}
       }
 
       if (response.ok) {
-        alert(noticiaEditando ? 'Notícia atualizada com sucesso!' : 'Notícia criada com sucesso!');
+        showToast(
+          noticiaEditando ? 'A notícia foi atualizada e já está visível no site.' : 'A notícia foi criada e já está disponível no site.',
+          'success',
+          noticiaEditando ? 'Notícia Atualizada' : 'Notícia Criada'
+        );
         formNoticia.style.display = 'none';
         noticiaForm.reset();
         noticiaEditando = null;
         await carregarNoticias();
       } else {
         const error = await response.json();
-        alert('Erro: ' + error.mensagem);
+        showToast(error.message || 'Não foi possível salvar a notícia', 'error', 'Erro');
       }
     } catch (error) {
       console.error('Erro:', error);
-      alert('Erro ao salvar notícia');
+      showToast('Ocorreu um erro ao salvar a notícia', 'error', 'Erro');
     }
   });
 
@@ -646,7 +739,14 @@ Ação: ${beneficiario.acao}
   };
 
   window.deletarNoticia = async (id) => {
-    if (!confirm('Tem certeza que deseja excluir esta notícia?')) {
+    const confirmado = await showConfirm(
+      'Esta ação não pode ser desfeita. A notícia será permanentemente removida do sistema.',
+      'Tem certeza que deseja excluir esta notícia?',
+      'Excluir',
+      'Cancelar'
+    );
+
+    if (!confirmado) {
       return;
     }
 
@@ -659,14 +759,14 @@ Ação: ${beneficiario.acao}
       });
 
       if (response.ok) {
-        alert('Notícia excluída com sucesso!');
+        showToast('A notícia foi excluída com sucesso', 'success', 'Notícia Excluída');
         await carregarNoticias();
       } else {
-        alert('Erro ao excluir notícia');
+        showToast('Não foi possível excluir a notícia', 'error', 'Erro');
       }
     } catch (error) {
       console.error('Erro:', error);
-      alert('Erro ao excluir notícia');
+      showToast('Ocorreu um erro ao excluir a notícia', 'error', 'Erro');
     }
   };
 
@@ -699,10 +799,12 @@ Ação: ${beneficiario.acao}
       titulo: document.getElementById('evento-titulo').value,
       descricao: document.getElementById('evento-descricao').value,
       data_evento: document.getElementById('evento-data').value,
+      data_evento_fim: document.getElementById('evento-data-fim').value || null,
       horario: document.getElementById('evento-horario').value || '',
       local: document.getElementById('evento-local').value,
       link: document.getElementById('evento-link').value || null,
       ativo: document.getElementById('evento-ativo').checked,
+      proximo_evento: document.getElementById('evento-proximo-evento').checked,
       acao_social: document.getElementById('evento-acao-social').checked,
       mostrar_botao_inscricao: document.getElementById('evento-mostrar-botao-inscricao').checked
     };
@@ -730,18 +832,22 @@ Ação: ${beneficiario.acao}
       }
 
       if (response.ok) {
-        alert(eventoEditando ? 'Evento atualizado com sucesso!' : 'Evento criado com sucesso!');
+        showToast(
+          eventoEditando ? 'O evento foi atualizado e já está visível no site.' : 'O evento foi criado e já está disponível no site.',
+          'success',
+          eventoEditando ? 'Evento Atualizado' : 'Evento Criado'
+        );
         formEvento.style.display = 'none';
         eventoForm.reset();
         eventoEditando = null;
         await carregarEventos();
       } else {
         const error = await response.json();
-        alert('Erro: ' + error.mensagem);
+        showToast(error.message || 'Não foi possível salvar o evento', 'error', 'Erro');
       }
     } catch (error) {
       console.error('Erro:', error);
-      alert('Erro ao salvar evento');
+      showToast('Ocorreu um erro ao salvar o evento', 'error', 'Erro');
     }
   });
 
@@ -799,10 +905,12 @@ Ação: ${beneficiario.acao}
       document.getElementById('evento-titulo').value = eventoEditando.titulo;
       document.getElementById('evento-descricao').value = eventoEditando.descricao;
       document.getElementById('evento-data').value = eventoEditando.data_evento;
+      document.getElementById('evento-data-fim').value = eventoEditando.data_evento_fim || '';
       document.getElementById('evento-horario').value = eventoEditando.horario || '';
       document.getElementById('evento-local').value = eventoEditando.local;
       document.getElementById('evento-link').value = eventoEditando.link || '';
       document.getElementById('evento-ativo').checked = eventoEditando.ativo;
+      document.getElementById('evento-proximo-evento').checked = eventoEditando.proximo_evento !== false;
       document.getElementById('evento-acao-social').checked = !!eventoEditando.acao_social;
       document.getElementById('evento-mostrar-botao-inscricao').checked = !!eventoEditando.mostrar_botao_inscricao;
       formEvento.style.display = 'block';
@@ -832,7 +940,14 @@ Ação: ${beneficiario.acao}
   };
 
   window.deletarEvento = async (id) => {
-    if (!confirm('Tem certeza que deseja excluir este evento?')) {
+    const confirmado = await showConfirm(
+      'Esta ação não pode ser desfeita. O evento será permanentemente removido do sistema.',
+      'Tem certeza que deseja excluir este evento?',
+      'Excluir',
+      'Cancelar'
+    );
+
+    if (!confirmado) {
       return;
     }
 
@@ -845,14 +960,14 @@ Ação: ${beneficiario.acao}
       });
 
       if (response.ok) {
-        alert('Evento excluído com sucesso!');
+        showToast('O evento foi excluído com sucesso', 'success', 'Evento Excluído');
         await carregarEventos();
       } else {
-        alert('Erro ao excluir evento');
+        showToast('Não foi possível excluir o evento', 'error', 'Erro');
       }
     } catch (error) {
       console.error('Erro:', error);
-      alert('Erro ao excluir evento');
+      showToast('Ocorreu um erro ao excluir o evento', 'error', 'Erro');
     }
   };
 

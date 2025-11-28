@@ -7,10 +7,18 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
   <header>
     <div class="container">
       <h1>ASPROMOVIMAR</h1>
-      <nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="mainNav">
         <a href="/">Início</a>
         <a href="/#sobre">Sobre</a>
         <a href="/#noticias">Notícias</a>
@@ -284,8 +292,14 @@
               </div>
 
               <div class="form-group">
-                <label for="evento-data">Data do Evento *</label>
+                <label for="evento-data">Data de Início *</label>
                 <input type="date" id="evento-data" required>
+              </div>
+
+              <div class="form-group">
+                <label for="evento-data-fim">Data de Término (opcional)</label>
+                <input type="date" id="evento-data-fim">
+                <small>Deixe em branco para eventos de um único dia. Para eventos duradouros ou permanentes, defina uma data futura.</small>
               </div>
 
               <div class="form-group">
@@ -312,16 +326,26 @@
 
               <div class="form-group">
                 <label>
-                  <input type="checkbox" id="evento-acao-social">
-                  Esta é uma ação social ativa (aparece em "Ações Sociais Ativas")
+                  <input type="checkbox" id="evento-proximo-evento" checked>
+                  Exibir na seção "Próximos Eventos"
                 </label>
+                <small>Marque para mostrar este evento na seção de próximos eventos da página inicial.</small>
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="evento-acao-social">
+                  Exibir na seção "Ações Sociais"
+                </label>
+                <small>Marque para mostrar este evento na seção de ações sociais da página inicial.</small>
               </div>
 
               <div class="form-group">
                 <label>
                   <input type="checkbox" id="evento-mostrar-botao-inscricao">
-                  Exibir botão de inscrição na página inicial
+                  Exibir botão de inscrição
                 </label>
+                <small>Adiciona um botão "Inscreva-se" destacado quando o evento aparecer na página inicial.</small>
               </div>
 
               <div style="display: flex; gap: 1rem;">
@@ -377,5 +401,31 @@
   </div>
 
   <script src="/js/admin.js"></script>
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a link
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
