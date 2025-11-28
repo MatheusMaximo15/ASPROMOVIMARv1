@@ -122,6 +122,7 @@ class ContentRepository {
       id: uuidv4(),
       titulo: eventoData.titulo,
       descricao: eventoData.descricao,
+      descricao_acao_social: eventoData.descricao_acao_social || null,
       data_evento: eventoData.data_evento,
       data_evento_fim: eventoData.data_evento_fim || null,
       horario: eventoData.horario || '',

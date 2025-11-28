@@ -1,12 +1,13 @@
 [
   {
     "id": "1f2a531b-791d-46a1-a29f-7e9a4b7b86ba",
-    "titulo": "Futebol na praça",
-    "descricao": "sadfsadfsadfsadf",
+    "titulo": "CastraMovel já DISPONIVEL!",
+    "descricao": "O CastraMovel já está disponível no centro da cidade! Levem seus Pets!",
     "data": "2025-11-28T01:09:43.367Z",
-    "categoria": "Notícia",
+    "categoria": "Comunicado",
     "link": null,
     "ativa": true,
-    "data_criacao": "2025-11-28T01:09:43.369Z"
+    "data_criacao": "2025-11-28T01:09:43.369Z",
+    "data_atualizacao": "2025-11-28T12:18:38.656Z"
   }
 ]

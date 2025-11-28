@@ -805,6 +805,7 @@ Ação: ${beneficiario.acao}
     const dados = {
       titulo: document.getElementById('evento-titulo').value,
       descricao: document.getElementById('evento-descricao').value,
+      descricao_acao_social: document.getElementById('evento-descricao-acao').value || null,
       data_evento: document.getElementById('evento-data').value,
       data_evento_fim: document.getElementById('evento-data-fim').value || null,
       horario: document.getElementById('evento-horario').value || '',
@@ -916,6 +917,7 @@ Ação: ${beneficiario.acao}
       document.getElementById('form-evento-titulo').textContent = 'Editar Evento';
       document.getElementById('evento-titulo').value = eventoEditando.titulo;
       document.getElementById('evento-descricao').value = eventoEditando.descricao;
+      document.getElementById('evento-descricao-acao').value = eventoEditando.descricao_acao_social || '';
       document.getElementById('evento-data').value = eventoEditando.data_evento;
       document.getElementById('evento-data-fim').value = eventoEditando.data_evento_fim || '';
       document.getElementById('evento-horario').value = eventoEditando.horario || '';

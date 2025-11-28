@@ -197,7 +197,9 @@ async function carregarAcoesSociaisHome() {
           periodo = dataEvento.toLocaleDateString('pt-BR');
         }
 
-        const descricaoFormatada = (evento.descricao || '').replace(/\n/g, '<br>');
+        // Usar descrição alternativa se disponível, senão usar a descrição padrão
+        const descricaoTexto = evento.descricao_acao_social || evento.descricao || '';
+        const descricaoFormatada = descricaoTexto.replace(/\n/g, '<br>');
 
         return `
           <div class="project-card card-hover spotlight reveal delay-${delay}" style="border: 2px solid var(--secondary-color);">

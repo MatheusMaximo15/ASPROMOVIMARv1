@@ -141,6 +141,14 @@ class ContentService {
       dadosAtualizacao.link = dados.link;
     }
 
+    if (dados.descricao !== undefined) {
+      dadosAtualizacao.descricao = dados.descricao.trim();
+    }
+
+    if (dados.descricao_acao_social !== undefined) {
+      dadosAtualizacao.descricao_acao_social = dados.descricao_acao_social ? dados.descricao_acao_social.trim() : null;
+    }
+
     if (dados.data_evento_fim !== undefined) {
       dadosAtualizacao.data_evento_fim = dados.data_evento_fim;
     }
