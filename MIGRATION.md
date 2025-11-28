@@ -106,8 +106,8 @@ module.exports = {
 
   app: {
     name: 'ASPROMOVIMAR',
-    fullName: 'Associação de Moradores do Icaraí',
-    bairro: 'Icaraí'
+    fullName: 'Associação de Proprietários e Moradores do Vila Maria Regina',
+    bairro: 'Vila Maria Regina'
   }
 };
 ```

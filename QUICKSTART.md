@@ -98,7 +98,7 @@ Acesse http://localhost:3000/cadastro e preencha:
 
 - **Nome:** João da Silva
 - **CPF:** 12345678909 (será formatado automaticamente)
-- **Endereço:** Rua Teste, 123, Icaraí
+- **Endereço:** Rua Teste, 123, Vila Maria Regina
 - **Telefone:** 21987654321
 - **Nº Pessoas:** 4
 - **Situação Atual:** Família em situação de vulnerabilidade necessitando de itens básicos
@@ -233,4 +233,4 @@ Para dúvidas ou problemas:
 
 ---
 
-**Desenvolvido para ASPROMOVIMAR - Associação de Moradores do Icaraí**
+**Desenvolvido para ASPROMOVIMAR - Associação de Proprietários e Moradores do Vila Maria Regina**

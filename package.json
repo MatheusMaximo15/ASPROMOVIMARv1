@@ -1,7 +1,7 @@
 {
   "name": "aspromovimar-site",
   "version": "1.0.0",
-  "description": "Site institucional da ASPROMOVIMAR - Associação de Moradores do Icaraí",
+  "description": "Site institucional da ASPROMOVIMAR - Associação de Proprietários e Moradores do Vila Maria Regina",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -11,7 +11,7 @@
   "keywords": [
     "associacao",
     "moradores",
-    "icarai",
+    "vila-maria-regina",
     "aspromovimar"
   ],
   "author": "ASPROMOVIMAR",

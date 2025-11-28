@@ -296,7 +296,7 @@ code .
 2. Preencha o formulário:
    - Nome: João da Silva
    - CPF: 12345678909
-   - Endereço: Rua Teste, 123, Icaraí
+   - Endereço: Rua Teste, 123, Vila Maria Regina
    - Telefone: 21987654321
    - Nº Pessoas: 4
    - Situação: Família em situação de vulnerabilidade
@@ -372,6 +372,6 @@ npm install express@latest
 
 ---
 
-**Projeto desenvolvido para ASPROMOVIMAR - Associação de Moradores do Icaraí**
+**Projeto desenvolvido para ASPROMOVIMAR - Associação de Proprietários e Moradores do Vila Maria Regina**
 
 Se tiver dúvidas, consulte a documentação completa no [README.md](README.md)

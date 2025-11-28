@@ -1,5 +1,5 @@
 ================================================================================
-  ASPROMOVIMAR - Site da Associação de Moradores do Icaraí
+  ASPROMOVIMAR - Site da Associação de Proprietários e Moradores do Vila Maria Regina
 ================================================================================
 
 IMPORTANTE: Você precisa instalar o Node.js primeiro!
@@ -191,7 +191,7 @@ Stack Overflow:     https://stackoverflow.com/
 3. Preencha o formulário:
    - Nome: João da Silva
    - CPF: 12345678909
-   - Endereço: Rua Teste, 123, Icaraí
+   - Endereço: Rua Teste, 123, Vila Maria Regina
    - Telefone: 21987654321
    - Nº Pessoas: 4
    - Situação: Família em situação de vulnerabilidade
@@ -222,7 +222,7 @@ Alterar textos:
 
 ================================================================================
 
-Desenvolvido para ASPROMOVIMAR - Associação de Moradores do Icaraí
+Desenvolvido para ASPROMOVIMAR - Associação de Proprietários e Moradores do Vila Maria Regina
 
 Projeto completo e funcional pronto para uso!
 

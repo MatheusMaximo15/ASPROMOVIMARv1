@@ -784,16 +784,11 @@ Ação: ${beneficiario.acao}
     eventoForm.reset();
 
     // Garantir que os checkboxes voltem ao estado padrão
-    console.log('Abrindo formulário para novo evento');
-    const checkboxProximo = document.getElementById('evento-proximo-evento');
-    console.log('Checkbox antes:', checkboxProximo.checked);
-
     document.getElementById('evento-ativo').checked = true;
-    checkboxProximo.checked = true;
+    document.getElementById('evento-proximo-evento').checked = true;
     document.getElementById('evento-acao-social').checked = false;
     document.getElementById('evento-mostrar-botao-inscricao').checked = false;
 
-    console.log('Checkbox depois:', checkboxProximo.checked);
     document.getElementById('form-evento-titulo').textContent = 'Novo Evento';
     formEvento.style.display = 'block';
   });
@@ -918,11 +913,6 @@ Ação: ${beneficiario.acao}
   window.editarEvento = (id) => {
     eventoEditando = todosEventos.find(e => e.id === id);
     if (eventoEditando) {
-      console.log('=== EDITANDO EVENTO ===');
-      console.log('Evento:', eventoEditando);
-      console.log('proximo_evento value:', eventoEditando.proximo_evento);
-      console.log('proximo_evento !== false:', eventoEditando.proximo_evento !== false);
-
       document.getElementById('form-evento-titulo').textContent = 'Editar Evento';
       document.getElementById('evento-titulo').value = eventoEditando.titulo;
       document.getElementById('evento-descricao').value = eventoEditando.descricao;
@@ -937,32 +927,20 @@ Ação: ${beneficiario.acao}
 
       // Checkboxes - setar depois que o form está visível
       setTimeout(() => {
-        const checkProximo = document.getElementById('evento-proximo-evento');
-        const valorProximo = eventoEditando.proximo_evento !== false;
-
-        console.log('Checkbox proximo antes:', checkProximo.checked);
-        console.log('Valor a setar:', valorProximo);
-
         // Forçar desmarcar primeiro para garantir mudança de estado
-        checkProximo.checked = false;
         document.getElementById('evento-ativo').checked = false;
+        document.getElementById('evento-proximo-evento').checked = false;
         document.getElementById('evento-acao-social').checked = false;
         document.getElementById('evento-mostrar-botao-inscricao').checked = false;
 
         // Forçar repaint
-        checkProximo.offsetHeight;
+        void document.getElementById('evento-proximo-evento').offsetHeight;
 
         // Agora setar os valores corretos
-        document.getElementById('evento-ativo').checked = eventoEditando.ativo !== false;
-        checkProximo.checked = valorProximo;
-        document.getElementById('evento-acao-social').checked = !!eventoEditando.acao_social;
-        document.getElementById('evento-mostrar-botao-inscricao').checked = !!eventoEditando.mostrar_botao_inscricao;
-
-        // Forçar outro repaint
-        checkProximo.offsetHeight;
-
-        console.log('Checkbox proximo depois:', checkProximo.checked);
-        console.log('Checked computado:', window.getComputedStyle(checkProximo).getPropertyValue('background-color'));
+        document.getElementById('evento-ativo').checked = eventoEditando.ativo === true;
+        document.getElementById('evento-proximo-evento').checked = eventoEditando.proximo_evento === true;
+        document.getElementById('evento-acao-social').checked = eventoEditando.acao_social === true;
+        document.getElementById('evento-mostrar-botao-inscricao').checked = eventoEditando.mostrar_botao_inscricao === true;
       }, 50);
     }
   };

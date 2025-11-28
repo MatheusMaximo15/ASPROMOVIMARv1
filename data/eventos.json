@@ -24,10 +24,10 @@
     "local": "A definir",
     "link": null,
     "ativo": true,
-    "proximo_evento": true,
+    "proximo_evento": false,
     "acao_social": true,
     "mostrar_botao_inscricao": true,
     "data_criacao": "2025-11-28T11:36:52.299Z",
-    "data_atualizacao": "2025-11-28T11:37:03.077Z"
+    "data_atualizacao": "2025-11-28T11:57:37.858Z"
   }
 ]
