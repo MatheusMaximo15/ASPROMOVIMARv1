@@ -1,4 +1,5 @@
 const contentRepository = require('../data/contentRepository');
+const sanitizeHtml = require('sanitize-html');
 
 class ContentService {
   // NOTÍCIAS
@@ -13,7 +14,17 @@ class ContentService {
 
     const noticiaData = {
       titulo: dados.titulo.trim(),
-      descricao: dados.descricao.trim(),
+      descricao: sanitizeHtml(dados.descricao.trim(), {
+        allowedTags: [
+          'p', 'br', 'strong', 'em', 'u', 'h2', 'h3',
+          'ul', 'ol', 'li', 'a', 'img', 'blockquote'
+        ],
+        allowedAttributes: {
+          a: ['href', 'target'],
+          img: ['src', 'alt', 'width', 'height'],
+        },
+        allowedSchemes: ['http', 'https', 'data']
+      }),
       data: dados.data || new Date().toISOString(),
       categoria: dados.categoria || 'Comunicado',
       link: dados.link || null,
@@ -45,7 +56,17 @@ class ContentService {
     }
 
     if (dados.descricao) {
-      dadosAtualizacao.descricao = dados.descricao.trim();
+      dadosAtualizacao.descricao = sanitizeHtml(dados.descricao.trim(), {
+        allowedTags: [
+          'p', 'br', 'strong', 'em', 'u', 'h2', 'h3',
+          'ul', 'ol', 'li', 'a', 'img', 'blockquote'
+        ],
+        allowedAttributes: {
+          a: ['href', 'target'],
+          img: ['src', 'alt', 'width', 'height'],
+        },
+        allowedSchemes: ['http', 'https', 'data']
+      });
     }
 
     if (dados.data) {
@@ -69,6 +90,14 @@ class ContentService {
 
   async deletarNoticia(id) {
     return await contentRepository.deleteNoticia(id);
+  }
+
+  async buscarNoticiaPorId(id) {
+    const noticia = await contentRepository.getNoticiaById(id);
+    if (!noticia) {
+      throw new Error('Notícia não encontrada');
+    }
+    return noticia;
   }
 
   // EVENTOS

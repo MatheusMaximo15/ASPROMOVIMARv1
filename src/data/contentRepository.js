@@ -37,6 +37,11 @@ class ContentRepository {
     return limit ? ativas.slice(0, limit) : ativas;
   }
 
+  async getNoticiaById(id) {
+    const noticias = await this._readFile(this.noticiasPath);
+    return noticias.find(n => n.id === id);
+  }
+
   async createNoticia(noticiaData) {
     const noticias = await this._readFile(this.noticiasPath);
 

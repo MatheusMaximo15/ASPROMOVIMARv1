@@ -25,16 +25,22 @@ async function carregarNoticiasHome() {
       container.innerHTML = noticias.map((noticia, index) => {
         const delay = (index + 1) * 100;
 
+        // Truncar descrição em 150 caracteres
+        let descricaoTruncada = noticia.descricao;
+        if (descricaoTruncada.length > 150) {
+          descricaoTruncada = descricaoTruncada.substring(0, 150) + '...';
+        }
+
         return `
-          <div class="project-card card-hover tilt-3d reveal delay-${delay}">
+          <div class="project-card card-hover tilt-3d reveal delay-${delay}" style="cursor: pointer;" onclick="window.location.href='/noticias/${noticia.id}'">
             <div class="spotlight"></div>
             <span class="badge">${noticia.categoria}</span>
             <h3>${noticia.titulo}</h3>
-            <p>${noticia.descricao}</p>
+            <p>${descricaoTruncada}</p>
             <div style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);">
               ${new Date(noticia.data).toLocaleDateString('pt-BR')}
             </div>
-            ${noticia.link ? `<a href="${noticia.link}" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">Saiba mais</a>` : ''}
+            <a href="/noticias/${noticia.id}" class="btn btn-primary" style="margin-top: 1rem;">Ler mais</a>
           </div>
         `;
       }).join('');

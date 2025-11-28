@@ -65,6 +65,22 @@ class ContentController {
     }
   }
 
+  async buscarNoticiaPorId(req, res) {
+    try {
+      const noticia = await contentService.buscarNoticiaPorId(req.params.id);
+      res.json({
+        sucesso: true,
+        data: noticia
+      });
+    } catch (error) {
+      const status = error.message.includes('não encontrada') ? 404 : 500;
+      res.status(status).json({
+        sucesso: false,
+        mensagem: error.message
+      });
+    }
+  }
+
   // EVENTOS
   async criarEvento(req, res) {
     try {

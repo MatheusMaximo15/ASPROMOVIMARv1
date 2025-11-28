@@ -30,6 +30,10 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'admin.html'));
 });
 
+app.get('/noticias/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'noticia.html'));
+});
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,

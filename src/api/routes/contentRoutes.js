@@ -4,6 +4,7 @@ const contentController = require('../controllers/contentController');
 const authMiddleware = require('../middleware/auth');
 
 // Rotas públicas para listar conteúdo ativo
+router.get('/noticias/:id', contentController.buscarNoticiaPorId);
 router.get('/noticias', contentController.listarNoticias);
 router.get('/eventos', contentController.listarEventos);
 

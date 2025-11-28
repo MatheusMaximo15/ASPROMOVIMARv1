@@ -584,15 +584,45 @@ Ação: ${beneficiario.acao}
   // GERENCIAMENTO DE NOTÍCIAS
   let todasNoticias = [];
   let noticiaEditando = null;
+  let quillEditor = null;
 
   const btnNovaNoticia = document.getElementById('btn-nova-noticia');
   const formNoticia = document.getElementById('form-noticia');
   const noticiaForm = document.getElementById('noticia-form');
   const btnCancelarNoticia = document.getElementById('btn-cancelar-noticia');
 
+  // Inicializar Quill Editor
+  function inicializarQuillEditor() {
+    if (quillEditor) return; // Já inicializado
+    
+    quillEditor = new Quill('#noticia-descricao-editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ 'header': [2, 3, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'align': [] }],
+          ['link', 'image', 'blockquote'],
+          ['clean']
+        ]
+      },
+      placeholder: 'Digite o conteúdo da notícia...'
+    });
+  }
+
   btnNovaNoticia.addEventListener('click', () => {
     noticiaEditando = null;
     noticiaForm.reset();
+    
+    // Inicializar Quill se ainda não foi
+    if (!quillEditor) {
+      inicializarQuillEditor();
+    }
+    
+    // Limpar conteúdo do editor
+    quillEditor.root.innerHTML = '';
+    
     document.getElementById('form-noticia-titulo').textContent = 'Nova Notícia';
     formNoticia.style.display = 'block';
   });
@@ -600,15 +630,22 @@ Ação: ${beneficiario.acao}
   btnCancelarNoticia.addEventListener('click', () => {
     formNoticia.style.display = 'none';
     noticiaForm.reset();
+    if (quillEditor) {
+      quillEditor.root.innerHTML = '';
+    }
     noticiaEditando = null;
   });
 
   noticiaForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Capturar HTML do Quill editor
+    const descricaoHtml = quillEditor ? quillEditor.root.innerHTML : '';
+    document.getElementById('noticia-descricao').value = descricaoHtml;
+
     const dados = {
       titulo: document.getElementById('noticia-titulo').value,
-      descricao: document.getElementById('noticia-descricao').value,
+      descricao: descricaoHtml,
       categoria: document.getElementById('noticia-categoria').value,
       link: document.getElementById('noticia-link').value || null,
       ativa: document.getElementById('noticia-ativa').checked
@@ -706,9 +743,17 @@ Ação: ${beneficiario.acao}
   window.editarNoticia = (id) => {
     noticiaEditando = todasNoticias.find(n => n.id === id);
     if (noticiaEditando) {
+      // Inicializar Quill se ainda não foi
+      if (!quillEditor) {
+        inicializarQuillEditor();
+      }
+      
       document.getElementById('form-noticia-titulo').textContent = 'Editar Notícia';
       document.getElementById('noticia-titulo').value = noticiaEditando.titulo;
-      document.getElementById('noticia-descricao').value = noticiaEditando.descricao;
+      
+      // Preencher o editor Quill com HTML
+      quillEditor.root.innerHTML = noticiaEditando.descricao;
+      
       document.getElementById('noticia-categoria').value = noticiaEditando.categoria;
       document.getElementById('noticia-link').value = noticiaEditando.link || '';
       document.getElementById('noticia-ativa').checked = noticiaEditando.ativa;
