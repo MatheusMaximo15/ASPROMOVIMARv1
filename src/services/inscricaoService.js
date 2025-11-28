@@ -59,7 +59,7 @@ class InscricaoService {
       telefone: dados.telefone.trim(),
       email: dados.email ? dados.email.trim() : null,
       endereco: dados.endereco ? dados.endereco.trim() : null,
-      numero_pessoas_residencia: dados.numero_pessoas_residencia || 1,
+      numero_pessoas_residencia: dados.numero_pessoas_residencia || null,
       observacoes: dados.observacoes ? dados.observacoes.trim() : null,
       campos_personalizados: dados.campos_personalizados || {},
       status: 'pendente'

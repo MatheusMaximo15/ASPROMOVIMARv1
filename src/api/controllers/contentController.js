@@ -100,7 +100,15 @@ class ContentController {
 
   async atualizarEvento(req, res) {
     try {
+      console.log('=== ATUALIZANDO EVENTO ===');
+      console.log('Body recebido:', JSON.stringify(req.body, null, 2));
+      console.log('proximo_evento no body:', req.body.proximo_evento);
+      console.log('tipo:', typeof req.body.proximo_evento);
+
       const eventoAtualizado = await contentService.atualizarEvento(req.params.id, req.body);
+
+      console.log('Evento atualizado:', JSON.stringify(eventoAtualizado, null, 2));
+
       res.json({
         sucesso: true,
         mensagem: 'Evento atualizado com sucesso',

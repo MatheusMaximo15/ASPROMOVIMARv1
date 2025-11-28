@@ -141,16 +141,24 @@ class ContentService {
       dadosAtualizacao.link = dados.link;
     }
 
+    if (dados.data_evento_fim !== undefined) {
+      dadosAtualizacao.data_evento_fim = dados.data_evento_fim;
+    }
+
     if (dados.ativo !== undefined) {
       dadosAtualizacao.ativo = dados.ativo;
     }
 
+    if (dados.proximo_evento !== undefined) {
+      dadosAtualizacao.proximo_evento = dados.proximo_evento;
+    }
+
     if (dados.acao_social !== undefined) {
-      dadosAtualizacao.acao_social = dados.acao_social === true;
+      dadosAtualizacao.acao_social = dados.acao_social;
     }
 
     if (dados.mostrar_botao_inscricao !== undefined) {
-      dadosAtualizacao.mostrar_botao_inscricao = dados.mostrar_botao_inscricao === true;
+      dadosAtualizacao.mostrar_botao_inscricao = dados.mostrar_botao_inscricao;
     }
 
     return await contentRepository.updateEvento(id, dadosAtualizacao);

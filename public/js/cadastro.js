@@ -141,9 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       cpf: cpfLimpo,
       endereco: data.endereco,
       telefone: telefoneLimpo,
-      numero_pessoas_residencia: parseInt(data.numero_pessoas_residencia) || 1,
-      email: data.email || null,
-      observacoes: data.observacoes || null
+      email: data.email || null
     };
 
     const submitButton = form.querySelector('button[type="submit"]');
