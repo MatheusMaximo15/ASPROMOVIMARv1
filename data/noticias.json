@@ -23,12 +23,12 @@
   {
     "id": "3fc13521-850a-4613-b5bf-ec268b8741e3",
     "titulo": "Teste de Editor Rico - Nova Funcionalidade",
-    "descricao": "<p>Esta é uma notícia de teste com formatação rica.</p><p>Este é um segundo parágrafo.Esta é uma demonstração do novo editor de texto rico implementado no sistema ASPROMOVIMAR.</p><p>Agora é possível formatar o texto de diversas maneiras:</p><ul><li>Negrito e itálico</li><li>Títulos e subtítulos</li><li>Listas ordenadas e não ordenadas</li></ul><p>Esta funcionalidade torna as notícias muito mais atrativas e fáceis de ler!</p><p><br /></p><p><br /></p>",
+    "descricao": "<p>Esta é uma notícia de teste com formatação rica.</p><p>Este é um segundo parágrafo.Esta é uma demonstração do novo editor de texto rico implementado no sistema ASPROMOVIMAR.</p><p>Agora é possível formatar o texto de diversas maneiras:</p><p>Negrito e itálico</p><p>Títulos e subtítulos</p><p>Listas ordenadas e não ordenadas</p><p>Esta funcionalidade torna as notícias muito mais atrativas e fáceis de ler!</p><p><br /></p><p><br /></p>",
     "data": "2025-11-28T17:54:54.630Z",
     "categoria": "Comunicado",
     "link": null,
     "ativa": true,
     "data_criacao": "2025-11-28T17:54:54.636Z",
-    "data_atualizacao": "2025-11-28T19:13:23.468Z"
+    "data_atualizacao": "2025-11-28T19:24:01.121Z"
   }
 ]

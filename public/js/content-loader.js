@@ -25,22 +25,27 @@ async function carregarNoticiasHome() {
       container.innerHTML = noticias.map((noticia, index) => {
         const delay = (index + 1) * 100;
 
+        // Remover HTML para obter apenas o texto puro
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = noticia.descricao;
+        let textoPuro = tempDiv.textContent || tempDiv.innerText || '';
+
         // Truncar descrição em 150 caracteres
-        let descricaoTruncada = noticia.descricao;
+        let descricaoTruncada = textoPuro;
         if (descricaoTruncada.length > 150) {
           descricaoTruncada = descricaoTruncada.substring(0, 150) + '...';
         }
 
         return `
-          <div class="project-card card-hover tilt-3d reveal delay-${delay}" style="cursor: pointer;" onclick="window.location.href='/noticias/${noticia.id}'">
+          <div class="project-card card-hover tilt-3d reveal delay-${delay}" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;" onclick="window.location.href='/noticias/${noticia.id}'">
             <div class="spotlight"></div>
             <span class="badge">${noticia.categoria}</span>
             <h3>${noticia.titulo}</h3>
-            <p>${descricaoTruncada}</p>
+            <p style="flex-grow: 1;">${descricaoTruncada}</p>
             <div style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);">
               ${new Date(noticia.data).toLocaleDateString('pt-BR')}
             </div>
-            <a href="/noticias/${noticia.id}" class="btn btn-primary" style="margin-top: 1rem;">Ler mais</a>
+            <a href="/noticias/${noticia.id}" class="btn btn-primary" style="margin-top: auto;">Ler mais</a>
           </div>
         `;
       }).join('');

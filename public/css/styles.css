@@ -1524,23 +1524,35 @@ table tbody tr:hover {
 }
 
 /* Footer Modern */
+/* Footer Modern */
 .noticia-footer-modern {
   margin-top: 4rem;
   padding-top: 2.5rem;
   border-top: 2px solid #f0f0f0;
+  background: transparent !important;
+  text-align: center;
 }
 
 .noticia-footer-modern .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.875rem 2rem;
+  padding: 0.875rem 2.5rem;
   font-weight: 600;
-  transition: all 0.3s;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .noticia-footer-modern .btn:hover {
-  transform: translateX(-5px);
+  transform: translateY(-3px);
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
 }
 
 /* Sidebar */
